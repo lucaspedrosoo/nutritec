@@ -102,11 +102,25 @@ function setupProfileMenu() {
 
     profileLink.addEventListener('click', function (event) {
         event.preventDefault();
+        const redirectToProfile = function (isLoggedIn) {
+            window.location.href = isLoggedIn ? 'profile.html' : 'login.html';
+        };
+
         if (window.getAuthState()) {
-            window.location.href = 'profile.html';
-        } else {
-            window.location.href = 'login.html';
+            redirectToProfile(true);
+            return;
         }
+
+        if (typeof window.syncAuthFromSupabase === 'function') {
+            window.syncAuthFromSupabase().then(function () {
+                redirectToProfile(window.getAuthState());
+            }).catch(function () {
+                redirectToProfile(false);
+            });
+            return;
+        }
+
+        redirectToProfile(false);
     });
 
     document.addEventListener('click', function (event) {
