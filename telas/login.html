@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTec - Login</title>
+    <link rel="stylesheet" href="../estilos/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <main class="auth-shell">
+        <section class="auth-card">
+            <div class="auth-brand">
+                <div class="logo">Nutri<span>Tec</span></div>
+                <p>Entre para acessar sua conta e continuar sua jornada de nutrição e performance.</p>
+            </div>
+
+            <div class="auth-panel">
+                <span class="badge-verde">Acesso seguro</span>
+                <h1>Login</h1>
+                <p class="auth-subtitle">Use seu email e senha para entrar. Nesta fase, o acesso ainda é local e serve como base para o Supabase depois.</p>
+
+                <form id="login-form" class="auth-form">
+                    <div class="input-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="voce@exemplo.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" placeholder="Digite sua senha" required>
+                    </div>
+                    <button type="submit" class="btn-principal btn-block">Entrar</button>
+                    <div class="auth-actions-row">
+                        <button type="button" class="btn-secundario btn-block" id="signup-button">Cadastrar usuário</button>
+                    </div>
+                    <p class="auth-feedback hidden" id="login-feedback"></p>
+                    <a href="index.html" class="auth-back-link">Voltar para a página inicial</a>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabase-config.js"></script>
+    <script src="../scripts/imc.js"></script>
+    <script src="../scripts/ui.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/profile-metrics.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

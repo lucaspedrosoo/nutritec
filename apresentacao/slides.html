@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTec - Slides de Apresentação</title>
+    <style>
+        :root {
+            --bg: #07130b;
+            --panel: #0d1f12;
+            --panel-2: #13281a;
+            --text: #edf7ef;
+            --muted: #b7c8bc;
+            --accent: #67d16b;
+            --accent-2: #2dd4bf;
+            --border: rgba(255, 255, 255, 0.10);
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(103, 209, 107, 0.15), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(45, 212, 191, 0.12), transparent 30%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .deck-shell {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 100% 100px, 100px 100%;
+            mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+        }
+
+        .slides {
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 48px 32px;
+            display: grid;
+            align-items: center;
+        }
+
+        .slide-inner {
+            width: min(1400px, 100%);
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            backdrop-filter: blur(10px);
+        }
+
+        .slide-copy {
+            padding: 40px;
+            background: linear-gradient(180deg, rgba(15, 30, 19, 0.88), rgba(9, 20, 12, 0.96));
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            justify-content: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(103, 209, 107, 0.12);
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        h1, h2, h3, p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: clamp(34px, 4vw, 62px);
+            line-height: 1.02;
+        }
+
+        h2 {
+            font-size: clamp(26px, 2.7vw, 40px);
+            line-height: 1.08;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 54ch;
+        }
+
+        .meta {
+            display: grid;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .meta span {
+            display: inline-flex;
+            width: fit-content;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .slide-visual {
+            background: linear-gradient(180deg, rgba(103, 209, 107, 0.06), rgba(45, 212, 191, 0.04));
+            padding: 22px;
+            display: grid;
+            align-items: center;
+        }
+
+        .shot {
+            width: 100%;
+            height: auto;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            box-shadow: 0 18px 54px rgba(0, 0, 0, 0.28);
+            display: block;
+            background: #0a120d;
+        }
+
+        .stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .footer-note {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .topbar {
+            width: min(1400px, calc(100% - 64px));
+            margin: 28px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: rgba(8, 18, 11, 0.72);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 20px;
+            z-index: 3;
+        }
+
+        .topbar .brand {
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .topbar nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .topbar a {
+            text-decoration: none;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .wide .slide-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .wide .slide-copy {
+            border-right: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .split-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .mini-card {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            background: rgba(255,255,255,0.04);
+            color: var(--muted);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        @media (max-width: 980px) {
+            .topbar {
+                width: min(1400px, calc(100% - 24px));
+                top: 12px;
+            }
+
+            .slide {
+                padding: 18px 12px 28px;
+            }
+
+            .slide-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .slide-copy {
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .split-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: #111;
+            }
+
+            .topbar,
+            .deck-shell {
+                display: none;
+            }
+
+            .slide {
+                min-height: auto;
+                page-break-after: always;
+            }
+
+            .slide-inner {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="deck-shell"></div>
+    <header class="topbar">
+        <div class="brand">NutriTec</div>
+        <nav>
+            <a href="#slide-1">Capa</a>
+            <a href="#slide-2">Início</a>
+            <a href="#slide-3">IMC</a>
+            <a href="#slide-4">Receitas</a>
+            <a href="#slide-5">Exercícios</a>
+            <a href="#slide-6">Contato</a>
+            <a href="#slide-7">Login</a>
+            <a href="#slide-8">Perfil</a>
+        </nav>
+    </header>
+
+    <main class="slides">
+        <section class="slide wide" id="slide-1">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Apresentação do projeto</span>
+                    <h1>NutriTec</h1>
+                    <p class="lead">Slides prontos para apresentação com prints reais de cada tela e das principais sessões do sistema.</p>
+                    <div class="split-grid">
+                        <div class="mini-card">Fonte principal: <a href="file:///d%3A/lucas/OneDrive_1_05-07-2026/telas/index.html">file:///d%3A/lucas/OneDrive_1_05-07-2026/telas/index.html</a></div>
+                        <div class="mini-card">Pasta de imagens: <strong>apresentacao/assets</strong></div>
+                    </div>
+                    <div class="meta">
+                        <span>1. Home com hero, IMC, receitas, exercícios e contato</span>
+                        <span>2. Login com autenticação e cadastro</span>
+                        <span>3. Perfil com métricas e edição de dados</span>
+                    </div>
+                    <p class="footer-note">Use este arquivo como apresentação no navegador ou imprima em PDF.</p>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/00-index-full.png" alt="Print da tela inicial completa do NutriTec">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-2">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Tela inicial</span>
+                    <h2>Header, hero e acesso rápido</h2>
+                    <p class="lead">Esta seção mostra a primeira dobra da home, com menu superior, destaque de proposta e botões para iniciar o diagnóstico ou navegar no conteúdo.</p>
+                    <ul class="list">
+                        <li>Menu de perfil com acesso ao login e ao perfil.</li>
+                        <li>Hero principal com mensagem da plataforma.</li>
+                        <li>Ações rápidas para diagnóstico e receitas.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/01-hero.png" alt="Print da seção inicial da página principal">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-3">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Calculadora IMC</span>
+                    <h2>Diagnóstico interativo</h2>
+                    <p class="lead">Seção usada para entrada de peso e altura, cálculo de IMC e exibição de classificação e sugestão de uso da plataforma.</p>
+                    <ul class="list">
+                        <li>Campo de peso e altura.</li>
+                        <li>Cálculo de IMC no botão Analisar Dados.</li>
+                        <li>Feedback visual com classificação e sugestão.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/02-imc.png" alt="Print da seção de cálculo de IMC">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-4">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Receitas</span>
+                    <h2>Catálogo alimentar com filtros</h2>
+                    <p class="lead">A área de receitas apresenta cards com imagens, calorias e categorias para filtrar conteúdos por perfil alimentar.</p>
+                    <ul class="list">
+                        <li>Filtro por café, almoço e detox.</li>
+                        <li>Cards com imagem, título e explicação curta.</li>
+                        <li>Card do Smoothie Verde já com imagem corrigida.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/03-receitas.png" alt="Print da seção de receitas">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-5">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Exercícios</span>
+                    <h2>Guia de treinos por objetivo</h2>
+                    <p class="lead">Nesta parte a tela organiza exercícios em categorias como cardio, força e alongamento, facilitando a apresentação por blocos.</p>
+                    <ul class="list">
+                        <li>Filtro por tipo de treino.</li>
+                        <li>Cards com imagem e descrição técnica.</li>
+                        <li>Separação visual forte para leitura rápida.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/04-exercicios.png" alt="Print da seção de exercícios">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-6">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Consultoria</span>
+                    <h2>Formulário de contato</h2>
+                    <p class="lead">Seção final da home para agendamento de consultoria com formulário simples e CTA de conversão.</p>
+                    <ul class="list">
+                        <li>Nome, e-mail, WhatsApp e foco principal.</li>
+                        <li>Botão de agendamento com destaque.</li>
+                        <li>Boa transição para encerrar a apresentação da home.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/05-contato.png" alt="Print da seção de contato">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-7">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Autenticação</span>
+                    <h2>Tela de login</h2>
+                    <p class="lead">Tela dedicada para entrada na conta e cadastro de usuário, mantendo o fluxo separado da página principal.</p>
+                    <ul class="list">
+                        <li>Campos de email e senha.</li>
+                        <li>Botões Entrar e Cadastrar usuário.</li>
+                        <li>Link para voltar para a página inicial.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/06-login-full.png" alt="Print da tela de login">
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-8">
+            <div class="slide-inner">
+                <div class="slide-copy">
+                    <span class="eyebrow">Perfil do usuário</span>
+                    <h2>Resumo de métricas e edição</h2>
+                    <p class="lead">Esta é a tela do perfil, onde o usuário visualiza dados corporais, edita informações e acompanha o resumo vinculado à conta.</p>
+                    <ul class="list">
+                        <li>Nome/e-mail do usuário logado.</li>
+                        <li>Botão para cadastrar ou editar dados.</li>
+                        <li>Cards com peso, altura, IMC e faixa ideal.</li>
+                    </ul>
+                </div>
+                <div class="slide-visual">
+                    <img class="shot" src="assets/07-profile-full.png" alt="Print da tela de perfil">
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

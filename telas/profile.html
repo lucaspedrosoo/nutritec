@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTec - Perfil</title>
+    <link rel="stylesheet" href="../estilos/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <main class="auth-shell profile-shell">
+        <section class="auth-card profile-card">
+            <div class="auth-brand">
+                <div class="logo">Nutri<span>Tec</span></div>
+                <p>Resumo do seu perfil com as métricas corporais mais recentes e informações básicas da conta.</p>
+            </div>
+
+            <div class="auth-panel">
+                <span class="badge-verde">Perfil do usuário</span>
+                <h1>Minha conta</h1>
+                <p class="auth-subtitle" id="profile-summary"></p>
+
+                <div class="profile-info-block">
+                    <span class="profile-info-label">Usuário logado</span>
+                    <strong id="profile-email">--</strong>
+                </div>
+
+                <div class="profile-section-controls">
+                    <button type="button" class="profile-data-toggle" id="profile-data-toggle">Cadastrar dados</button>
+                </div>
+
+                <section class="profile-form-section hidden" id="profile-form-section">
+                    <div class="profile-section-header">
+                        <div>
+                            <span class="profile-info-label">Dados corporais</span>
+                            <h2>Atualizar informações</h2>
+                        </div>
+                        <p>Preencha seus dados para manter o resumo corporal sempre atualizado.</p>
+                    </div>
+
+                    <form id="profile-data-form" class="profile-data-form">
+                        <div class="profile-form-grid">
+                            <div class="input-group">
+                                <label for="profile-weight">Peso atual (kg)</label>
+                                <input type="number" id="profile-weight" step="0.1" placeholder="Ex: 82.3" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="profile-height">Altura atual (m)</label>
+                                <input type="number" id="profile-height" step="0.01" placeholder="Ex: 1.81" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="profile-waist">Cintura (cm)</label>
+                                <input type="number" id="profile-waist" step="0.1" placeholder="Ex: 88" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="profile-hip">Quadril (cm)</label>
+                                <input type="number" id="profile-hip" step="0.1" placeholder="Ex: 102" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="profile-goal">Objetivo principal</label>
+                                <select id="profile-goal" required>
+                                    <option value="">Selecione</option>
+                                    <option value="emagrecimento">Emagrecimento</option>
+                                    <option value="definicao">Definição muscular</option>
+                                    <option value="hipertrofia">Hipertrofia</option>
+                                    <option value="saude">Saúde e manutenção</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="profile-activity">Nível de atividade</label>
+                                <select id="profile-activity" required>
+                                    <option value="">Selecione</option>
+                                    <option value="sedentario">Sedentário</option>
+                                    <option value="leve">Leve</option>
+                                    <option value="moderado">Moderado</option>
+                                    <option value="intenso">Intenso</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="profile-form-actions">
+                            <button type="submit" class="btn-principal">Salvar dados</button>
+                            <button type="button" class="profile-secondary-button" id="profile-data-clear">Limpar campos</button>
+                            <button type="button" class="profile-secondary-button" id="profile-data-close">Fechar</button>
+                        </div>
+
+                        <p class="profile-form-feedback hidden" id="profile-form-feedback"></p>
+                    </form>
+                </section>
+
+                <div class="profile-metrics-grid" id="profile-metrics"></div>
+
+                <div class="profile-actions">
+                    <a href="index.html" class="profile-back-button">Voltar</a>
+                    <a href="login.html" class="auth-back-link profile-logout-link" id="profile-logout-link">Sair da conta</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabase-config.js"></script>
+    <script src="../scripts/imc.js"></script>
+    <script src="../scripts/ui.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/profile-metrics.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTec - Ecossistema de Nutrição e Performance</title>
+    <link rel="stylesheet" href="../estilos/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo">Nutri<span>Tec</span></div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#imc">Calculadora IMC</a></li>
+                    <li><a href="#receitas">Super Receitas</a></li>
+                    <li><a href="#exercicios">Treinos e Exercícios</a></li>
+                    <li><a href="#contato">Consultoria</a></li>
+                </ul>
+            </nav>
+            <div class="profile-menu">
+                <button type="button" class="profile-btn" id="profile-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Abrir menu de perfil">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="profile-icon">
+                        <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.866 0-7 2.239-7 5v1h14v-1c0-2.761-3.134-5-7-5z"></path>
+                    </svg>
+                    <span id="profile-button-label">Conta</span>
+                </button>
+                <div class="profile-dropdown hidden" id="profile-dropdown" role="menu" aria-label="Menu de perfil">
+                    <a href="#" class="profile-item" data-action="perfil" role="menuitem">Perfil</a>
+                    <a href="login.html" class="profile-item profile-action" id="profile-auth-action" role="menuitem">Entrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="badge-verde">⚡ A maior plataforma verde de saúde</span>
+                <h1>Seu Corpo, Suas Metas e a <br><span class="txt-verde">Tecnologia Integrada</span></h1>
+                <p>Explore um acervo massivo e interativo de guias alimentares de alta performance, planos de queima de gordura e ganho muscular.</p>
+                <div class="hero-buttons">
+                    <a href="#imc" class="btn-principal">Começar Diagnóstico</a>
+                    <a href="#receitas" class="btn-secundario">Ver Todas as Receitas</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?q=80&w=800" alt="Nutrição Verde">
+            </div>
+        </div>
+    </section>
+
+    <section id="imc" class="section-padding bg-verde-profundo text-white">
+        <div class="container imc-grid">
+            <div class="imc-info">
+                <h2 class="text-white">Diagnóstico Interativo Instantâneo</h2>
+                <p>Utilize nossa inteligência integrada para descobrir seu estado atual. Insira suas métricas e o sistema calculará em tempo real seu IMC e exibirá o plano ideal recomendado.</p>
+                <div class="metricas-rapidas" style="margin-top: 15px; display: flex; gap: 15px;">
+                    <span>⏱️ Menos de 5s</span>
+                    <span>📊 Resultados Precisos</span>
+                </div>
+            </div>
+            <div class="imc-card text-dark">
+                <h3>Métricas Corporais</h3>
+                <div class="input-group">
+                    <label for="peso">Peso Atual (kg):</label>
+                    <input type="number" id="peso" placeholder="Ex: 82.3" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="altura">Altura Atual (m):</label>
+                    <input type="number" id="altura" placeholder="Ex: 1.81" step="0.01">
+                </div>
+                <button onclick="calcularIMC()" class="btn-principal btn-block">Analisar Dados</button>
+                
+                <div id="imc-resultado" class="resultado-box hidden">
+                    <p>Métrica Calculada: <strong id="imc-valor">--</strong></p>
+                    <p id="imc-classificacao" class="txt-verde-destaque">Aguardando...</p>
+                    <div id="imc-sugestao" class="sugestao-texto" style="font-size: 13px; color: #166534; margin-top: 10px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="receitas" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Catálogo de Dicas Alimentares & Receitas</h2>
+                <p>Clique nos botões abaixo para filtrar dinamicamente as categorias de alimentos instantaneamente.</p>
+                
+                <div class="filter-buttons">
+                    <button class="btn-filter active" onclick="filtrarReceitas('todos')">Ver Tudo</button>
+                    <button class="btn-filter" onclick="filtrarReceitas('cafe')">Café & Lanches</button>
+                    <button class="btn-filter" onclick="filtrarReceitas('almoco')">Almoço & Jantar</button>
+            
+                </div>
+            </div>
+            
+            <div class="cards-grid" id="grid-receitas">
+                <div class="card item-receita" data-cat="detox">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.pexels.com/photos/775032/pexels-photo-775032.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Smoothie verde antioxidante">
+                        <span class="card-macro">180 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Detox</span>
+                        <h3>Smoothie Verde Antioxidante</h3>
+                        <p>Combinação rica de espinafre orgânico, abacaxi maduro, gengibre e hortelã. Limpa o organismo e reidrata.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="almoco">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600" alt="Quinoa">
+                        <span class="card-macro">350 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Almoço</span>
+                        <h3>Salada Premium de Quinoa Real</h3>
+                        <p>Quinoa cozida misturada com grão-de-bico, folhas verdes escuras, rabanete e molho de azeite extra virgem.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="cafe">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1565299543923-37dd37887442?q=80&w=600" alt="Panqueca">
+                        <span class="card-macro">260 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Café</span>
+                        <h3>Panqueca de Aveia Integral e Banana</h3>
+                        <p>Fácil e rápida. Apenas aveia pura, ovos e banana amassada cozidos em fogo baixo com canela em pó.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="almoco">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=600" alt="Salmão">
+                        <span class="card-macro">410 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Almoço</span>
+                        <h3>Salmão Grelhado com Aspargos</h3>
+                        <p>Filé alto grelhado com ervas finas acompanhado de aspargos frescos salteados no azeite de oliva.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="cafe">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600" alt="Iogurte">
+                        <span class="card-macro">220 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Café</span>
+                        <h3>Bowl de Iogurte Grego e Berries</h3>
+                        <p>Proteína pura do iogurte grego natural misturado com antioxidantes de morangos, mirtilos e sementes de chia.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="cafe">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?q=80&w=600" alt="Crepioca integral com frango">
+                        <span class="card-macro">195 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Café</span>
+                        <h3>Crepioca Integral de Frango Desfiado</h3>
+                        <p>Tapioca com ovo batido recheado com peito de frango desfiado, temperado com cúrcuma anti-inflamatória.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="detox">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600" alt="Suco termogênico de cenoura e limão">
+                        <span class="card-macro">120 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Detox</span>
+                        <h3>Suco Termogênico de Cenoura e Limão</h3>
+                        <p>Cenoura fresca batida com suco de limão puro, água filtrada e lascas de gengib de metabolismo.</p>
+                    </div>
+                </div>
+                <div class="card item-receita" data-cat="almoco">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600" alt="Frango Grelhado">
+                        <span class="card-macro">390 kcal</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">Almoço</span>
+                        <h3>Peito de Frango com Purê de Batata Doce</h3>
+                        <p>Carboidrato complexo de baixo índice glicêmico combinado com proteína magra de alta absorção.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="exercicios" class="section-padding bg-verde-claro">
+        <div class="container">
+            <div class="section-header">
+                <h2>Guia Completo de Exercícios Físicos Inteligentes</h2>
+                <p>Selecione seu tipo de treino abaixo para conferir as instruções e fotos específicas.</p>
+                
+                <div class="filter-buttons">
+                    <button class="btn-filter-ex active" onclick="filtrarExercicios('todos')">Ver Tudo</button>
+                    <button class="btn-filter-ex" onclick="filtrarExercicios('cardio')">Cardio & HIIT</button>
+                    <button class="btn-filter-ex" onclick="filtrarExercicios('forca')">Força & Músculos</button>
+                    <button class="btn-filter-ex" onclick="filtrarExercicios('along')">Alongamento & Core</button>
+                </div>
+            </div>
+            
+            <div class="cards-grid" id="grid-exercicios">
+                <div class="card item-exercicio" data-cat="cardio">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600" alt="Funcional">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Cardio</span>
+                        <h3>Circuito Funcional Queima Rápida</h3>
+                        <p>Sequências consecutivas de polichinelos, burpees e agachamentos sem intervalo para pico metabólico elevado.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="cardio">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=600" alt="Corrida">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Cardio</span>
+                        <h3>Corrida Intervalada de Alta Intensidade</h3>
+                        <p>Alterne 60 segundos de corrida intensa com 60 segundos de caminhada moderada durante 20 minutos completos.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="along">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600" alt="Alongamento">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Alongamento</span>
+                        <h3>Mobilidade & Alinhamento de Coluna</h3>
+                        <p>Movimentos e posturas de alongamento para reduzir dores causadas pela fadiga e posições sentadas.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="forca">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600" alt="Musculação">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Força</span>
+                        <h3>Treino de Força com Pesos Livres</h3>
+                        <p>Uso de halteres e anilhas focando em agachamento sumô e supino para construção e definição muscular.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="along">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1599447421416-3414500d18a5?q=80&w=600" alt="Core">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Alongamento</span>
+                        <h3>Fortalecimento de Abdômen e Core</h3>
+                        <p>Pranchas estáticas frontais e exercícios de estabilização profunda para blindagem da região lombar.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="cardio">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600" alt="Corda">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Cardio</span>
+                        <h3>Treino Pliométrico com Corda</h3>
+                        <p>Saltos coordenados de alta velocidade para desenvolvimento de panturrilhas, agilidade e alto gasto calórico.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="forca">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?q=80&w=600" alt="Calistenia">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Força</span>
+                        <h3>Calistenia Dinâmica e Flexões</h3>
+                        <p>Domine o controle do peso corporal com flexões de braço variadas e barras para densidade de tronco.</p>
+                    </div>
+                </div>
+                <div class="card item-exercicio" data-cat="along">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600" alt="Pilates">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag tag-ex">Alongamento</span>
+                        <h3>Pilates Solo e Respiração Muscular</h3>
+                        <p>Movimentos isométricos lentos e focados para tonificar os tecidos profundos e melhorar a consciência corporal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="section-padding">
+        <div class="container contato-container">
+            <div class="section-header">
+                <h2>Fale com um Nutricionista NutriTec</h2>
+                <p>Gere um ecossistema exclusivo para o seu perfil genético e biotipo.</p>
+            </div>
+            <form class="contato-form" onsubmit="event.preventDefault(); alert('Mentoria agendada! Enviamos um link para o seu WhatsApp.');">
+                <div class="form-row">
+                    <input type="text" placeholder="Nome Completo" required>
+                    <input type="email" placeholder="Seu E-mail" required>
+                </div>
+                <div class="form-row">
+                    <input type="tel" placeholder="WhatsApp">
+                    <select required>
+                        <option value="">Foco Principal</option>
+                        <option value="perda">Perda Extrema de Gordura</option>
+                        <option value="ganho">Hipertrofia Limpa</option>
+                        <option value="energia">Longevidade e Energia Diária</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-principal btn-block">Agendar Consultoria VIP</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">Nutri<span>Tec</span></div>
+            <p>Plataforma Máxima Avançada Verde de Nutrição & Treinamentos Digitais.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026 <strong>NutriTec Interativo Premium</strong>. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/supabase-config.js"></script>
+    <script src="../scripts/imc.js"></script>
+    <script src="../scripts/ui.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/profile-metrics.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>
