@@ -88,12 +88,7 @@ async function setupProfilePage() {
         }
 
         currentUserId = user.id;
-        localStorage.setItem('nutritec-auth-email', user.email || '');
-        localStorage.setItem('nutritec-auth-user-id', user.id || '');
         window.setAuthState(true);
-
-        metrics = window.getStoredBodyMetrics(currentUserId);
-        profileData = window.getStoredProfileData(currentUserId);
 
         const dbMetrics = await fetchLatestBodyMetrics(currentUserId);
 
@@ -119,10 +114,6 @@ async function setupProfilePage() {
             window.saveProfileData(profileData, currentUserId);
             window.saveBodyMetricsCache(metrics, currentUserId);
         }
-    } else {
-        const fallbackUserKey = window.getAuthUserId ? window.getAuthUserId() : '';
-        metrics = window.getStoredBodyMetrics(fallbackUserKey);
-        profileData = window.getStoredProfileData(fallbackUserKey);
     }
 
     const email = window.getAuthEmail();

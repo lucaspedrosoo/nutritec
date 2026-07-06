@@ -1,12 +1,8 @@
-const PROFILE_STORAGE_KEY = 'nutritec-auth-state';
-const AUTH_USER_ID_KEY = 'nutritec-auth-user-id';
-const AUTH_EMAIL_KEY = 'nutritec-auth-email';
-const PROFILE_DATA_KEY = 'nutritec-profile-data';
-const BODY_METRICS_KEY = 'nutritec-body-metrics';
 const SUPABASE_URL = 'https://hkxtbqhbohtuqtpeleys.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_00N4hoDp3-ex8TcNCucs_A_HkzbmMqz';
 
 let supabaseClient = null;
+let currentSessionUser = null;
 
 function isSupabaseConfigured() {
     return SUPABASE_URL
@@ -28,29 +24,21 @@ function getSupabaseClient() {
 }
 
 function getAuthState() {
-    return localStorage.getItem(PROFILE_STORAGE_KEY) === 'logged-in';
+    return Boolean(currentSessionUser);
 }
 
 function getAuthEmail() {
-    return localStorage.getItem(AUTH_EMAIL_KEY) || '';
+    return currentSessionUser?.email || '';
 }
 
 function getAuthUserId() {
-    return localStorage.getItem(AUTH_USER_ID_KEY) || '';
-}
-
-function getProfileStorageKey(userId) {
-    const resolvedUserId = userId || getAuthUserId() || getAuthEmail() || 'anonymous';
-    return `${PROFILE_DATA_KEY}:${resolvedUserId}`;
-}
-
-function getBodyMetricsStorageKey(userId) {
-    const resolvedUserId = userId || getAuthUserId() || getAuthEmail() || 'anonymous';
-    return `${BODY_METRICS_KEY}:${resolvedUserId}`;
+    return currentSessionUser?.id || '';
 }
 
 function setAuthState(isLoggedIn) {
-    localStorage.setItem(PROFILE_STORAGE_KEY, isLoggedIn ? 'logged-in' : 'logged-out');
+    if (!isLoggedIn) {
+        currentSessionUser = null;
+    }
 
     if (typeof window.renderProfileMenu === 'function') {
         window.renderProfileMenu();
@@ -58,54 +46,32 @@ function setAuthState(isLoggedIn) {
 }
 
 function setAuthSession(userId, email) {
-    if (userId) {
-        localStorage.setItem(AUTH_USER_ID_KEY, userId);
-    }
-
-    localStorage.setItem(AUTH_EMAIL_KEY, email);
+    currentSessionUser = {
+        id: userId || '',
+        email: email || ''
+    };
     setAuthState(true);
 }
 
 function clearAuthSession() {
-    localStorage.removeItem(AUTH_USER_ID_KEY);
-    localStorage.removeItem(AUTH_EMAIL_KEY);
+    currentSessionUser = null;
     setAuthState(false);
 }
 
 function getStoredBodyMetrics(userId) {
-    const rawMetrics = localStorage.getItem(getBodyMetricsStorageKey(userId));
-
-    if (!rawMetrics) {
-        return null;
-    }
-
-    try {
-        return JSON.parse(rawMetrics);
-    } catch (error) {
-        return null;
-    }
+    return null;
 }
 
 function getStoredProfileData(userId) {
-    const rawProfileData = localStorage.getItem(getProfileStorageKey(userId));
-
-    if (!rawProfileData) {
-        return null;
-    }
-
-    try {
-        return JSON.parse(rawProfileData);
-    } catch (error) {
-        return null;
-    }
+    return null;
 }
 
 function saveProfileData(profileData, userId) {
-    localStorage.setItem(getProfileStorageKey(userId), JSON.stringify(profileData));
+    return profileData;
 }
 
 function saveBodyMetricsCache(bodyMetrics, userId) {
-    localStorage.setItem(getBodyMetricsStorageKey(userId), JSON.stringify(bodyMetrics));
+    return bodyMetrics;
 }
 
 function calculateImcDetails(peso, altura) {
@@ -171,9 +137,7 @@ async function syncAuthFromSupabase() {
     const sessionEmail = data.session.user?.email || '';
 
     if (sessionEmail) {
-        localStorage.setItem(AUTH_USER_ID_KEY, data.session.user?.id || '');
-        localStorage.setItem(AUTH_EMAIL_KEY, sessionEmail);
-        setAuthState(true);
+        setAuthSession(data.session.user?.id || '', sessionEmail);
     }
 }
 
@@ -182,8 +146,6 @@ window.getSupabaseClient = getSupabaseClient;
 window.getAuthState = getAuthState;
 window.getAuthEmail = getAuthEmail;
 window.getAuthUserId = getAuthUserId;
-window.getProfileStorageKey = getProfileStorageKey;
-window.getBodyMetricsStorageKey = getBodyMetricsStorageKey;
 window.setAuthState = setAuthState;
 window.setAuthSession = setAuthSession;
 window.clearAuthSession = clearAuthSession;

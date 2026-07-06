@@ -46,14 +46,6 @@ function calcularIMC() {
 
     bodyMetrics.sugestao = sugestaoTxt.innerText;
     bodyMetrics.dataAtualizacao = new Date().toISOString();
-
-    const userId = typeof window.getAuthUserId === 'function' ? window.getAuthUserId() : '';
-
-    if (typeof window.saveBodyMetricsCache === 'function') {
-        window.saveBodyMetricsCache(bodyMetrics, userId);
-    } else {
-        localStorage.setItem('nutritec-body-metrics', JSON.stringify(bodyMetrics));
-    }
 }
 
 window.calcularIMC = calcularIMC;
